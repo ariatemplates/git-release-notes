@@ -53,7 +53,7 @@ More advanced options are
 * `b` or `branch` Git branch, defaults to `master`
 * `t` or `title` Regular expression to parse the commit title (see next chapter)
 * `m` or `meaning` Meaning of capturing block in title's regular expression
-* `f` or `file` JSON Configuration file, better option when you don't want to pass all parameters to the command line, for an example see [options.json]()
+* `f` or `file` JSON Configuration file, better option when you don't want to pass all parameters to the command line, for an example see [options.json](https://github.com/ariatemplates/release-notes/blob/master/options.json)
 
 #### Title Parsing
 
@@ -61,7 +61,7 @@ Some projects might have special naming conventions for the commit title.
 
 The options `t` and `m` allow to specify this logic and extract additional information from the title.
 
-For instance, [Aria Templates]() has the following convention
+For instance, [Aria Templates](https://github.com/ariatemplates/ariatemplates) has the following convention
 
     fix #123 Title of a bug fix commit
     feat #234 Title of a cool new feature
