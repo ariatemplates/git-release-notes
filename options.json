@@ -1,0 +1,4 @@
+{
+	"title" : "^([a-z]+) #(\\d+) (.*)$",
+	"meaning" : ["type", "issue", "title"]
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Release Notes</title>
+        <meta name="description" content="Release Notes">
+        <meta name="viewport" content="width=device-width">
+        <style>
+			body {
+				font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, 'Lucida Grande', sans-serif;;
+				line-height: 1.5em;
+				color: #333;
+				background: #eee;
+			}
+			.container {
+				margin: 0 auto;
+				width: 800px;
+			}
+
+			.title {
+				text-align: center;
+				margin: 4em 0 4em 0;
+				background: #eee;
+			}
+			.title h1 {
+				font-size: 4.5em;
+				font-weight: bold;
+				margin-bottom: 0;
+				letter-spacing: -.05em;
+				margin-top: .3em;
+			}
+
+			.author {
+				color: #74BCBC;
+			}
+			.category {
+				margin: 2em 0;
+				overflow: auto;
+			}
+			.category h2 {
+				font-size: 1.4em;
+				margin-bottom: 0em;
+			}
+			.category .date {
+				font-size: .8em;
+				color: #666;
+			}
+			.category .commit {
+				margin-top: 0em;
+			}
+			.summary {
+				margin-bottom: 0;
+			}
+			.commit {
+				padding: 1px 1em;
+				color: white;
+				background: #333;
+				margin: 2em 0;
+			}
+			.commit h2 {
+				font-size: 1em;
+			}
+			.commit pre {
+				padding-left: 2em;
+			}
+        </style>
+    </head>
+    <body>
+    	<div class="container" role="main">
+    		<div class="header title">
+				<h1>Release Notes</h1>
+			</div>
+			<div class="category">
+				<% commits.forEach(function (commit) { %>
+					<p class="summary">
+						<span class="author"><%= commit.authorName %></span>
+						committed on 
+						<span class="date"><%= commit.committerDate %></span>
+					</p>
+					
+					<div class="commit">
+						<h2><%= commit.title %></h2>
+						<pre><%= commit.messageLines.join("\n") %>
+					</div>
+					<div class="footer">
+				<% }) %>
+			</div>
+		</div>
+    </body>
+</html>
