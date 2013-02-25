@@ -6,14 +6,14 @@ Generate release note pages from git commit history.
 
 It's preferable to install it globally through `npm`
 
-    npm install -g release-notes
+    npm install -g git-release-notes
 
 ### Usage
 
 The basic usage is
 
     cd <your_git_project>
-    release-notes <since>..<until> <template>
+    git-release-notes <since>..<until> <template>
 
 Where
 
@@ -24,13 +24,13 @@ Two templates are included as reference, `markdown` and `html`.
 
 This are for instance the release notes generated from `joyent/node` running
 
-    release-notes v0.9.8..v0.9.9 html > changelog.html
+    git-release-notes v0.9.8..v0.9.9 html > changelog.html
 
-<a href="https://github.com/ariatemplates/release-notes/raw/master/templates/node.png" target="_blank"><img src="https://github.com/ariatemplates/release-notes/raw/master/templates/node_thumb.png" alt="Node's release notes"></a>
+<a href="https://github.com/ariatemplates/git-release-notes/raw/master/templates/node.png" target="_blank"><img src="https://github.com/ariatemplates/git-release-notes/raw/master/templates/node_thumb.png" alt="Node's release notes"></a>
 
 #### Custom template
 
-The second parameter of `release-notes` can be any path to a valid ejs template files.
+The second parameter of `git-release-notes` can be any path to a valid ejs template files.
 
 The only available template local variable is `commits` that is an array of commits, each containing
 
@@ -53,7 +53,7 @@ More advanced options are
 * `b` or `branch` Git branch, defaults to `master`
 * `t` or `title` Regular expression to parse the commit title (see next chapter)
 * `m` or `meaning` Meaning of capturing block in title's regular expression
-* `f` or `file` JSON Configuration file, better option when you don't want to pass all parameters to the command line, for an example see [options.json](https://github.com/ariatemplates/release-notes/blob/master/options.json)
+* `f` or `file` JSON Configuration file, better option when you don't want to pass all parameters to the command line, for an example see [options.json](https://github.com/ariatemplates/git-release-notes/blob/master/options.json)
 
 #### Title Parsing
 
@@ -68,7 +68,7 @@ For instance, [Aria Templates](https://github.com/ariatemplates/ariatemplates) h
 
 In this case using
 
-    release-notes -t "^([a-z]+) #(\d+) (.*)$" -m type -m issue -m title v1.3.6..HEAD html
+    git-release-notes -t "^([a-z]+) #(\d+) (.*)$" -m type -m issue -m title v1.3.6..HEAD html
 
 generates the additional fields on the commit object
 
@@ -79,4 +79,4 @@ generates the additional fields on the commit object
 
 Another project using similar conventions is [AngularJs](https://github.com/angular/angular.js), [commit message conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#).
 
-    release-notes -t "^(\w*)(?:\(([\w\$\.]*)\))?\: (.*)$" -m type -m scope -m title v1.1.2..v1.1.3 markdown
+    git-release-notes -t "^(\w*)(?:\(([\w\$\.]*)\))?\: (.*)$" -m type -m scope -m title v1.1.2..v1.1.3 markdown

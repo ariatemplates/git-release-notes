@@ -1,6 +1,6 @@
 {
   "author": "ariatemplates <contact@ariatemplates.com> (http://github.com/ariatemplates)",
-  "name": "release-notes",
+  "name": "git-release-notes",
   "description": "Generate beautiful release notes from a git log.",
   "keywords" : ["git", "log", "release notes", "compare", "version"],
   "version": "0.0.1",
