@@ -1,0 +1,21 @@
+*        text=auto
+
+*.htm    text diff=html
+*.html   text diff=html
+*.js     text eol=lf
+*.json   text
+*.jsonp  text
+*.css    text
+*.cml    text
+*.tml    text
+*.tpl    text
+*.md     text
+*.txt    text
+*.xml    text
+*.yml    text
+*.yaml   text
+
+*.png    binary
+*.jpg    binary
+*.gif    binary
+*.swf    binary
