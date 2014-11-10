@@ -9,14 +9,15 @@
     "ejs" : "0.8.x"
   },
   "contributors" : {
-  	"name" : "Fabio Crisci",
-  	"email" : "fabio@ariatemplates.com",
-  	"url" : "https://github.com/piuccio"
+    "name" : "Fabio Crisci",
+    "email" : "fabio@ariatemplates.com",
+    "url" : "https://github.com/piuccio"
   },
   "bin" : "./index.js",
   "repository" : {
-  	"type" : "git",
-  	"url" : "https://github.com/ariatemplates/release-notes"
+    "type" : "git",
+    "url" : "https://github.com/ariatemplates/git-release-notes"
   },
+  "homepage": "https://github.com/ariatemplates/git-release-notes",
   "preferGlobal" : true
 }
