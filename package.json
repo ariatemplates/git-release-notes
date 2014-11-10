@@ -2,22 +2,28 @@
   "author": "ariatemplates <contact@ariatemplates.com> (http://github.com/ariatemplates)",
   "name": "git-release-notes",
   "description": "Generate beautiful release notes from a git log.",
-  "keywords" : ["git", "log", "release notes", "compare", "version"],
-  "version": "0.0.1",
+  "keywords": [
+    "git",
+    "log",
+    "release notes",
+    "compare",
+    "version"
+  ],
+  "version": "0.0.2",
   "dependencies": {
-    "optimist" : "0.3",
-    "ejs" : "0.8.x"
+    "optimist": "0.3",
+    "ejs": "0.8.x"
   },
-  "contributors" : {
-    "name" : "Fabio Crisci",
-    "email" : "fabio@ariatemplates.com",
-    "url" : "https://github.com/piuccio"
+  "contributors": {
+    "name": "Fabio Crisci",
+    "email": "fabio@ariatemplates.com",
+    "url": "https://github.com/piuccio"
   },
-  "bin" : "./index.js",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/ariatemplates/git-release-notes"
+  "bin": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ariatemplates/git-release-notes"
   },
   "homepage": "https://github.com/ariatemplates/git-release-notes",
-  "preferGlobal" : true
+  "preferGlobal": true
 }
