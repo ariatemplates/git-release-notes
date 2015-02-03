@@ -15,6 +15,10 @@ var argv = require("optimist").usage("release-notes [<options>] <since>..<until>
 	"alias" : "meaning",
 	"default" : ['type']
 })
+.options("g", {
+	"alias" : "grep",
+	"default" : ""
+})
 .options("b", {
 	"alias" : "branch",
 	"default" : "master"
@@ -24,6 +28,7 @@ var argv = require("optimist").usage("release-notes [<options>] <since>..<until>
 	"p" : "Git project path",
 	"t" : "Commit title regular expression",
 	"m" : "Meaning of capturing block in title's regular expression",
+	"g" : "Grep through commit messages with a regular expression",
 	"b" : "Git branch, defaults to master"
 })
 .boolean("version")
@@ -62,6 +67,7 @@ fs.readFile(template, function (err, templateContent) {
 				branch : options.b,
 				range : argv._[0],
 				title : new RegExp(options.t),
+				grep : options.g,
 				meaning : Array.isArray(options.m) ? options.m : [options.m],
 				cwd : options.p
 			}, function (commits) {
@@ -87,7 +93,8 @@ function getOptions (callback) {
 						b : stored.b || stored.branch || argv.b,
 						t : stored.t || stored.title || argv.t,
 						m : stored.m || stored.meaning || argv.m,
-						p : stored.p || stored.path || argv.p
+						p : stored.p || stored.path || argv.p,
+						g : stored.g || stored.grep || argv.g
 					};
 				} catch (ex) {
 					console.error("Invalid JSON in configuration file");
