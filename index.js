@@ -75,7 +75,7 @@ fs.readFile(template, function (err, templateContent) {
 				cwd : options.p
 			}, function (commits) {
 				if (argv.n) {
-					fileData = fs.readFileSync('commits.json', 'utf8')
+					fileData = fs.readFileSync('commits.json', 'utf8');
 					fileData = JSON.parse(fileData);
 					if (fileData.lastCommit[options.path] === commits[0].sha1) {
 						commits = [];

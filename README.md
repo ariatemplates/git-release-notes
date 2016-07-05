@@ -54,6 +54,7 @@ More advanced options are
 * `t` or `title` Regular expression to parse the commit title (see next chapter)
 * `m` or `meaning` Meaning of capturing block in title's regular expression
 * `f` or `file` JSON Configuration file, better option when you don't want to pass all parameters to the command line, for an example see [options.json](https://github.com/ariatemplates/git-release-notes/blob/master/options.json)
+* `n` or `new` If there are no changes since the last generation, do not return old ones. Output tempalte will show "No Changes"
 
 #### Title Parsing
 
