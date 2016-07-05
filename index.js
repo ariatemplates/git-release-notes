@@ -19,11 +19,16 @@ var argv = require("optimist").usage("release-notes [<options>] <since>..<until>
 	"alias" : "branch",
 	"default" : "master"
 })
+.options("n", {
+	"alias": "new",
+	"default" : false
+})
 .describe({
 	"f" : "Configuration file",
 	"p" : "Git project path",
 	"t" : "Commit title regular expression",
 	"m" : "Meaning of capturing block in title's regular expression",
+	"n" : "If there are no changes do not return old ones",
 	"b" : "Git branch, defaults to master"
 })
 .boolean("version")
@@ -51,6 +56,10 @@ if (!fs.existsSync(template)) {
 		process.exit(1);
 	}
 }
+if (!fs.existsSync('commits.json')) {
+	fs.writeFileSync('commits.json', JSON.stringify({ lastCommit: {}}, null, 4));
+}
+
 fs.readFile(template, function (err, templateContent) {
 	if (err) {
 		require("optimist").showHelp();
@@ -65,6 +74,16 @@ fs.readFile(template, function (err, templateContent) {
 				meaning : Array.isArray(options.m) ? options.m : [options.m],
 				cwd : options.p
 			}, function (commits) {
+				if (argv.n) {
+					fileData = fs.readFileSync('commits.json', 'utf8')
+					fileData = JSON.parse(fileData);
+					if (fileData.lastCommit[options.path] === commits[0].sha1) {
+						commits = [];
+					} else {
+						fileData.lastCommit[options.path] = commits[0].sha1;
+						fs.writeFileSync('commits.json', JSON.stringify(fileData, null, 4));
+					}
+				}
 				var output = ejs.render(templateContent.toString(), {
 					commits : commits
 				});

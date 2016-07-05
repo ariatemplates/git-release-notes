@@ -75,19 +75,23 @@
 				<h1>Release Notes</h1>
 			</div>
 			<div class="category">
-				<% commits.forEach(function (commit) { %>
-					<p class="summary">
-						<span class="author"><%= commit.authorName %></span>
-						committed on 
-						<span class="date"><%= commit.committerDate %></span>
-					</p>
-					
-					<div class="commit">
-						<h2><%= commit.title %></h2>
-						<pre><%= commit.messageLines.join("\n") %>
-					</div>
-					<div class="footer">
-				<% }) %>
+				<% if (commits.length > 0) { %>
+					<% commits.forEach(function (commit) { %>
+						<p class="summary">
+							<span class="author"><%= commit.authorName %></span>
+							committed on
+							<span class="date"><%= commit.committerDate %></span>
+						</p>
+
+						<div class="commit">
+							<h2><%= commit.title %></h2>
+							<pre><%= commit.messageLines.join("\n") %>
+						</div>
+						<div class="footer">
+					<% }) %>
+				<% } else {%>
+					<h2 class="title">No Changes</h2>
+				<% } %>
 			</div>
 		</div>
     </body>
