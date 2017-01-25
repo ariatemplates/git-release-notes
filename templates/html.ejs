@@ -78,15 +78,14 @@
 				<% commits.forEach(function (commit) { %>
 					<p class="summary">
 						<span class="author"><%= commit.authorName %></span>
-						committed on 
+						committed on
 						<span class="date"><%= commit.committerDate %></span>
 					</p>
-					
+
 					<div class="commit">
 						<h2><%= commit.title %></h2>
-						<pre><%= commit.messageLines.join("\n") %>
+						<pre><%= commit.messageLines.join("\n") %></pre>
 					</div>
-					<div class="footer">
 				<% }) %>
 			</div>
 		</div>
