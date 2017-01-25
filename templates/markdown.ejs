@@ -1,7 +1,7 @@
 <% commits.forEach(function (commit) { %>
 * __<%= commit.title %>__
 
-    [<%= commit.authorName %>](<%= commit.authorEmail %>) - <%= commit.committerDate %>
+    [<%= commit.authorName %>](mailto:<%= commit.authorEmail %>) - <%= commit.committerDate %>
     
     <%= commit.messageLines.join("\n    ") %>
 <% }) %>
