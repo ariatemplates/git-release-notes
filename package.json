@@ -9,8 +9,13 @@
     "compare",
     "version"
   ],
+  "scripts": {
+    "lint": "eslint index.js lib",
+    "posttest": "npm run lint"
+  },
   "version": "0.0.3",
   "dependencies": {
+    "debug": "^2.6.0",
     "ejs": "^2.5.5",
     "optimist": "^0.6.1"
   },
@@ -25,5 +30,8 @@
     "url": "https://github.com/ariatemplates/git-release-notes"
   },
   "homepage": "https://github.com/ariatemplates/git-release-notes",
-  "preferGlobal": true
+  "preferGlobal": true,
+  "devDependencies": {
+    "eslint": "^3.14.0"
+  }
 }

@@ -39,9 +39,12 @@ var git = require("./lib/git");
 var fs = require("fs");
 var ejs = require("ejs");
 var path = require("path");
+var debug = require("debug")("release-notes:cli");
 
 var template = argv._[1];
+debug("Trying to locate template '%s'", template);
 if (!fs.existsSync(template)) {
+	debug("Template file '%s' doesn't exist, maybe it's template name", template);
 	// Template name?
 	if (template.match(/[a-z]+(\.ejs)?/)) {
 		template = path.resolve(__dirname, "./templates/" + path.basename(template, ".ejs") + ".ejs");
@@ -51,6 +54,7 @@ if (!fs.existsSync(template)) {
 		process.exit(1);
 	}
 }
+debug("Trying to read template '%s'", template);
 fs.readFile(template, function (err, templateContent) {
 	if (err) {
 		require("optimist").showHelp();
@@ -58,6 +62,7 @@ fs.readFile(template, function (err, templateContent) {
 		process.exit(5);
 	} else {
 		getOptions(function (options) {
+			debug("Running git log in '%s' on branch '%s' with range '%s'", options.p, options.b, argv._[0]);
 			git.log({
 				branch : options.b,
 				range : argv._[0],
@@ -65,10 +70,17 @@ fs.readFile(template, function (err, templateContent) {
 				meaning : Array.isArray(options.m) ? options.m : [options.m],
 				cwd : options.p
 			}, function (commits) {
-				var output = ejs.render(templateContent.toString(), {
-					commits : commits
-				});
-				process.stdout.write(output + "\n");
+				debug("Got %d commits", commits.length);
+				if (commits.length) {
+					debug("Rendering template");
+					var output = ejs.render(templateContent.toString(), {
+						commits : commits
+					});
+					process.stdout.write(output + "\n");
+				} else {
+					console.error('No commits in the specified range');
+					process.exit(6);
+				}
 			});
 		});
 	}
@@ -76,6 +88,7 @@ fs.readFile(template, function (err, templateContent) {
 
 function getOptions (callback) {
 	if (argv.f) {
+		debug("Trying to read configuration file '%s'", argv.f);
 		fs.readFile(argv.f, function (err, data) {
 			if (err) {
 				console.error("Unable to read configuration file\n" + err.message);

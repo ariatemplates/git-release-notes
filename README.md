@@ -26,7 +26,7 @@ This are for instance the release notes generated from `joyent/node` running
 
     git-release-notes v0.9.8..v0.9.9 html > changelog.html
 
-<a href="https://github.com/ariatemplates/git-release-notes/raw/master/templates/node.png" target="_blank"><img src="https://github.com/ariatemplates/git-release-notes/raw/master/templates/node_thumb.png" alt="Node's release notes"></a>
+[<img src="https://github.com/ariatemplates/git-release-notes/raw/master/templates/node_thumb.png" alt="Node's release notes">](https://github.com/ariatemplates/git-release-notes/raw/master/templates/node.png)
 
 #### Custom template
 
@@ -68,7 +68,9 @@ For instance, [Aria Templates](https://github.com/ariatemplates/ariatemplates) h
 
 In this case using
 
-    git-release-notes -t "^([a-z]+) #(\d+) (.*)$" -m type -m issue -m title v1.3.6..HEAD html
+```
+git-release-notes -t "^([a-z]+) #(\d+) (.*)$" -m type -m issue -m title v1.3.6..HEAD html
+```
 
 generates the additional fields on the commit object
 
@@ -79,4 +81,13 @@ generates the additional fields on the commit object
 
 Another project using similar conventions is [AngularJs](https://github.com/angular/angular.js), [commit message conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#).
 
-    git-release-notes -t "^(\w*)(?:\(([\w\$\.]*)\))?\: (.*)$" -m type -m scope -m title v1.1.2..v1.1.3 markdown
+```
+git-release-notes -t "^(\w*)(?:\(([\w\$\.]*)\))?\: (.*)$" -m type -m scope -m title v1.1.2..v1.1.3 markdown
+```
+
+
+### Debug
+
+If the output is not what you expect run
+
+`DEBUG=release-notes:* git-release-notes ...`
