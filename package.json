@@ -11,8 +11,8 @@
   ],
   "version": "0.0.3",
   "dependencies": {
-    "optimist": "0.3",
-    "ejs": "0.8.x"
+    "ejs": "^2.5.5",
+    "optimist": "^0.6.1"
   },
   "contributors": {
     "name": "Fabio Crisci",
