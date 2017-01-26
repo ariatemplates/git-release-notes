@@ -13,7 +13,7 @@
     "lint": "eslint index.js lib",
     "posttest": "npm run lint"
   },
-  "version": "0.0.3",
+  "version": "1.0.0",
   "dependencies": {
     "debug": "^2.6.0",
     "ejs": "^2.5.5",
