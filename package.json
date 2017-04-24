@@ -11,7 +11,10 @@
   ],
   "scripts": {
     "lint": "eslint index.js lib",
-    "posttest": "npm run lint"
+    "posttest": "npm run lint",
+    "test-html": "node index.js -- 32a369f..f6cf9af ./templates/html.ejs > ./samples/output-html.html",
+    "test-html-bootstrap": "node index.js -- 32a369f..f6cf9af ./templates/html-bootstrap.ejs > ./samples/output-html-bootstrap.html",
+    "test-markdown": "node index.js -- 32a369f..f6cf9af ./templates/markdown.ejs > ./samples/output-markdown.md"
   },
   "version": "1.0.0",
   "dependencies": {

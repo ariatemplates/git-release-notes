@@ -1,0 +1,103 @@
+<%
+function formatDate(date) {
+
+  var monthNames = [
+    "Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+  
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = leftPad(hours) + ':' + minutes
+  return date.getDate() + "-" +  monthNames[date.getMonth()] +"-"+ date.getFullYear() + "  " + strTime;
+}
+
+function leftPad(input){
+    pad = '00'
+    return (pad + input).slice(-pad.length)
+}
+
+function sortableDate(date) {
+  
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var strTime = leftPad(hours) + ':' + minutes
+  return date.getFullYear() + "-" + leftPad(date.getMonth()) + "-" + leftPad(date.getDate()) + "_" + strTime;
+}
+
+%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Release Notes</title>
+
+        <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.13/datatables.min.css"/>
+  </head>
+ <body>
+    	<div class="container" role="main">
+            <div class="row">
+                <h1>Release Notes</h1>
+            </div>
+            
+            <div class="row">
+                <div class="header title">
+                    <h2>Commits</h2>
+                </div>
+                 <table id="commitTable" class="table table-bordered table-striped table-hover">
+                 <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Author</th>
+                    <th>Commit</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% 
+                    commits.forEach(function (commit) { 
+                    
+                    var commitDate = new Date(Date.parse(commit.committerDate))
+                    messageLines = commit.messageLines.join("\n")
+                  %>
+                    <tr>
+                        
+                        <td nowrap="nowrap"><span style="display:none"><%= sortableDate(commitDate) %>&nbsp;</span><%= formatDate(commitDate) %></td>
+                        <td><%= commit.authorName %></td>
+                        <td>
+                            <%= commit.title %>
+                            <% 
+                                if (messageLines.length > 0)
+                                {
+                            %>
+                                    <pre><%= messageLines %></pre>
+                            <%
+                                }
+                            %>
+                        </td>
+                    </tr>
+                    <% }) %>
+                    </tbody>
+                  </table>
+            </div>
+		</div>
+	
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jqc-1.12.4/dt-1.10.13/datatables.min.js"></script>
+        <script>
+        $(document).ready(function() {
+            $('#commitTable').DataTable({
+                'iDisplayLength':25,
+                "order": [[ 0, "desc" ]]
+            });
+        } );
+        </script>
+    </body>
+</html>

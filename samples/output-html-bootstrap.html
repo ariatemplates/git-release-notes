@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Release Notes</title>
+
+        <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.13/datatables.min.css"/>
+  </head>
+ <body>
+    	<div class="container" role="main">
+            <div class="row">
+                <h1>Release Notes</h1>
+            </div>
+            
+            <div class="row">
+                <div class="header title">
+                    <h2>Commits</h2>
+                </div>
+                 <table id="commitTable" class="table table-bordered table-striped table-hover">
+                 <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Author</th>
+                    <th>Commit</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  
+                    <tr>
+                        
+                        <td nowrap="nowrap"><span style="display:none">2017-00-26_20:43&nbsp;</span>26-Jan-2017  20:43</td>
+                        <td>Fabio Crisci</td>
+                        <td>
+                            1.0.0
+                            
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        
+                        <td nowrap="nowrap"><span style="display:none">2017-00-26_03:41&nbsp;</span>26-Jan-2017  03:41</td>
+                        <td>Fabio Crisci</td>
+                        <td>
+                            Fix error when git log returns an empty string
+                            
+                                    <pre>And add a bunch of debug instructions
+</pre>
+                            
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        
+                        <td nowrap="nowrap"><span style="display:none">2017-00-26_02:39&nbsp;</span>26-Jan-2017  02:39</td>
+                        <td>Fabio Crisci</td>
+                        <td>
+                            Update the html template
+                            
+                                    <pre>Remove the useless footer and close a pre tag
+</pre>
+                            
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        
+                        <td nowrap="nowrap"><span style="display:none">2017-00-25_23:54&nbsp;</span>25-Jan-2017  23:54</td>
+                        <td>Fabio Crisci</td>
+                        <td>
+                            0.0.3
+                            
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        
+                        <td nowrap="nowrap"><span style="display:none">2017-00-24_20:1&nbsp;</span>24-Jan-2017  20:01</td>
+                        <td>Pav Andriychenko</td>
+                        <td>
+                            #15 Add mailto to markdown.ejs
+                            
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        
+                        <td nowrap="nowrap"><span style="display:none">2014-10-11_03:21&nbsp;</span>11-Nov-2014  03:21</td>
+                        <td>jakub-g</td>
+                        <td>
+                            0.0.2
+                            
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        
+                        <td nowrap="nowrap"><span style="display:none">2014-10-11_03:18&nbsp;</span>11-Nov-2014  03:18</td>
+                        <td>jakub-g</td>
+                        <td>
+                            fix broken repo link in package.json
+                            
+                                    <pre>close #3
+</pre>
+                            
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        
+                        <td nowrap="nowrap"><span style="display:none">2014-10-11_03:18&nbsp;</span>11-Nov-2014  03:18</td>
+                        <td>jakub-g</td>
+                        <td>
+                            Add .gitattributes
+                            
+                                    <pre>Close #2 Close #4
+</pre>
+                            
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        
+                        <td nowrap="nowrap"><span style="display:none">2013-01-26_04:52&nbsp;</span>26-Feb-2013  04:52</td>
+                        <td>fcrisci</td>
+                        <td>
+                            Rename to git-release-notes
+                            
+                                    <pre>Because release-notes is too generic :( and taken already on npm :&#39;(
+</pre>
+                            
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        
+                        <td nowrap="nowrap"><span style="display:none">2013-01-26_04:13&nbsp;</span>26-Feb-2013  04:13</td>
+                        <td>Fabio Crisci</td>
+                        <td>
+                            Missing links
+                            
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        
+                        <td nowrap="nowrap"><span style="display:none">2013-01-26_04:12&nbsp;</span>26-Feb-2013  04:12</td>
+                        <td>Fabio Crisci</td>
+                        <td>
+                            style glitch
+                            
+                        </td>
+                    </tr>
+                    
+                    </tbody>
+                  </table>
+            </div>
+		</div>
+	
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jqc-1.12.4/dt-1.10.13/datatables.min.js"></script>
+        <script>
+        $(document).ready(function() {
+            $('#commitTable').DataTable({
+                'iDisplayLength':25,
+                "order": [[ 0, "desc" ]]
+            });
+        } );
+        </script>
+    </body>
+</html>
+
