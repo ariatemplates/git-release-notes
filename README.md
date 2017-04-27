@@ -4,7 +4,7 @@ Generate release note pages from git commit history.
 
 ### Installation
 
-It's preferable to install it globally through `npm`
+It's preferable to install it globally through [`npm`](https://www.npmjs.com/package/git-release-notes)
 
     npm install -g git-release-notes
 
@@ -90,6 +90,12 @@ git-release-notes -t "^(\w*)(?:\(([\w\$\.]*)\))?\: (.*)$" -m type -m scope -m ti
 
 ### Debug
 
-If the output is not what you expect run
+If the output is not what you expect, set the DEBUG environment variable:
 
-`DEBUG=release-notes:* git-release-notes ...`
+#### Linux
+    DEBUG=release-notes:* git-release-notes ...
+
+#### Windows
+
+    SET DEBUG=release-notes:*
+    git-release-notes ...
