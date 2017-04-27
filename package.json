@@ -22,11 +22,11 @@
     "ejs": "^2.5.5",
     "optimist": "^0.6.1"
   },
-  "contributors": {
+  "contributors": [{
     "name": "Fabio Crisci",
     "email": "fabio@ariatemplates.com",
     "url": "https://github.com/piuccio"
-  },
+  }],
   "bin": "./index.js",
   "repository": {
     "type": "git",
