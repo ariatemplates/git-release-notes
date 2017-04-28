@@ -40,6 +40,7 @@ var fs = require("fs");
 var ejs = require("ejs");
 var path = require("path");
 var debug = require("debug")("release-notes:cli");
+var dateFnsFormat = require('date-fns/format')
 
 var template = argv._[1];
 debug("Trying to locate template '%s'", template);
@@ -74,7 +75,8 @@ fs.readFile(template, function (err, templateContent) {
 				if (commits.length) {
 					debug("Rendering template");
 					var output = ejs.render(templateContent.toString(), {
-						commits : commits
+						commits : commits,
+						dateFnsFormat: dateFnsFormat
 					});
 					process.stdout.write(output + "\n");
 				} else {

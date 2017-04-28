@@ -1,32 +1,3 @@
-<%
-function formatDate(date) {
-
-  var monthNames = [
-    "Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-  ];
-  
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var ampm = hours >= 12 ? 'pm' : 'am';
-  minutes = minutes < 10 ? '0'+minutes : minutes;
-  var strTime = leftPad(hours) + ':' + minutes
-  return date.getDate() + "-" +  monthNames[date.getMonth()] +"-"+ date.getFullYear() + "  " + strTime;
-}
-
-function leftPad(input){
-    pad = '00'
-    return (pad + input).slice(-pad.length)
-}
-
-function sortableDate(date) {
-  
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var strTime = leftPad(hours) + ':' + minutes
-  return date.getFullYear() + "-" + leftPad(date.getMonth()) + "-" + leftPad(date.getDate()) + "_" + strTime;
-}
-
-%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -66,11 +37,13 @@ function sortableDate(date) {
                     commits.forEach(function (commit) { 
                     
                     var commitDate = new Date(Date.parse(commit.committerDate))
+                    var formattedDate = dateFnsFormat(commitDate, [format='DD-MMM-YYYY HH:mm'])
+                    var sortableDate = dateFnsFormat(commitDate, [format='YYYY-MM-DDTHH:mm:ss'])
                     messageLines = commit.messageLines.join("\n")
                   %>
                     <tr>
                         
-                        <td nowrap="nowrap"><span style="display:none"><%= sortableDate(commitDate) %>&nbsp;</span><%= formatDate(commitDate) %></td>
+                        <td nowrap="nowrap"><span style="display:none"><%= sortableDate %>&nbsp;</span><%= formattedDate %></td>
                         <td><%= commit.authorName %></td>
                         <td>
                             <%= commit.title %>
