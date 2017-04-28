@@ -1,3 +1,9 @@
+<%
+    // Derive repo name from current working directory
+    // http://stackoverflow.com/a/16695464/1141876
+    var repoPath = options.p;
+    var repoName = repoPath.match(/([^\/\\]*)\/*$/)[1]
+%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +23,7 @@
  <body>
     	<div class="container" role="main">
             <div class="row">
-                <h1>Release Notes</h1>
+                <h1><%= repoName %> Release Notes</h1>
             </div>
             
             <div class="row">

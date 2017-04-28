@@ -52,6 +52,8 @@ Several template variables are made available to the script running inside the t
 
 `dateFnsFormat` is the date-fns [format](https://date-fns.org/docs/format) function. See the [html-bootstrap](https://github.com/ariatemplates/git-release-notes/blob/master/templates/html-bootstrap.ejs) for sample usage.
 
+`options` the object documented below. Useful for parsing the repository name. See the [html-bootstrap](https://github.com/ariatemplates/git-release-notes/blob/master/templates/html-bootstrap.ejs) for sample usage.
+
 ### Options
 
 More advanced options are

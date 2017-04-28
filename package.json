@@ -13,7 +13,7 @@
     "lint": "eslint index.js lib",
     "posttest": "npm run lint",
     "test-html": "node index.js -- 32a369f..0419636 ./templates/html.ejs > ./samples/output-html.html",
-    "test-html-bootstrap": "cross-env DEBUG=* node index.js -- 32a369f..0419636 ./templates/html-bootstrap.ejs > ./samples/output-html-bootstrap.html",
+    "test-html-bootstrap": "cross-env DEBUG=*cli node index.js -- 32a369f..0419636 ./templates/html-bootstrap.ejs > ./samples/output-html-bootstrap.html",
     "test-markdown": "node index.js -- 32a369f..0419636 ./templates/markdown.ejs > ./samples/output-markdown.md"
   },
   "version": "1.0.0",

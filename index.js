@@ -76,7 +76,8 @@ fs.readFile(template, function (err, templateContent) {
 					debug("Rendering template");
 					var output = ejs.render(templateContent.toString(), {
 						commits : commits,
-						dateFnsFormat: dateFnsFormat
+						dateFnsFormat: dateFnsFormat,
+						options : options
 					});
 					process.stdout.write(output + "\n");
 				} else {
