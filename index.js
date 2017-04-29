@@ -40,7 +40,8 @@ var fs = require("fs");
 var ejs = require("ejs");
 var path = require("path");
 var debug = require("debug")("release-notes:cli");
-var dateFnsFormat = require('date-fns/format')
+var dateFnsFormat = require('date-fns/format');
+var request = require('sync-request'); 
 
 var range = argv._[0];
 var template = argv._[1];
@@ -86,7 +87,8 @@ fs.readFile(template, function (err, templateContent) {
 						commits : commits,
 						dateFnsFormat: dateFnsFormat,
 						options : options,
-						range : rangeStruct
+						range : rangeStruct,
+						request : request					// Make this available so a template can call a Jira API for example
 					});
 					process.stdout.write(output + "\n");
 				} else {
