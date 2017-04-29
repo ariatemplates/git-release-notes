@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var argv = require("optimist").usage("release-notes [<options>] <since>..<until> <template>")
+var argv = require("optimist").usage("git-release-notes [<options>] <since>..<until> <template>")
 .options("f", {
 	"alias" : "file"
 })

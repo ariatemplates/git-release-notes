@@ -50,9 +50,11 @@ Several template variables are made available to the script running inside the t
 * `title` subject (%s)
 * `messageLines` array of body lines (%b)
 
-`dateFnsFormat` is the date-fns [format](https://date-fns.org/docs/format) function. See the [html-bootstrap](https://github.com/ariatemplates/git-release-notes/blob/master/templates/html-bootstrap.ejs) for sample usage.
+`dateFnsFormat` is the date-fns [format](https://date-fns.org/docs/format) function. See the [html-bootstrap](https://github.com/ariatemplates/git-release-notes/blob/master/templates/html-bootstrap.ejs) for usage example.
 
 `options` the object documented below. Useful for parsing the repository name. See the [html-bootstrap](https://github.com/ariatemplates/git-release-notes/blob/master/templates/html-bootstrap.ejs) for sample usage.
+
+`request` is an instance of [sync-request](https://www.npmjs.com/package/sync-request). This can be useful for querying the Jira API for example to extract extra metadata about a ticket related to a commit.
 
 ### Options
 
@@ -93,6 +95,11 @@ Another project using similar conventions is [AngularJs](https://github.com/angu
 ```
 git-release-notes -t "^(\w*)(?:\(([\w\$\.]*)\))?\: (.*)$" -m type -m scope -m title v1.1.2..v1.1.3 markdown
 ```
+
+### Development
+To execute from this source against another repository, use a command like
+
+    node index.js -p C:\Code\other-repo 0841c28..9a480d5 ./templates/html-bootstrap.ejs > other-repo-notes.html
 
 
 ### Debug
