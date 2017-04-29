@@ -25,7 +25,13 @@
             <div class="row">
                 <h1><%= repoName %> Release Notes</h1>
             </div>
-            
+            <div class="row">
+                <p>
+                    Release notes since 
+                    <span class="label label-primary"><%= range.since %></span> until
+                    <span class="label label-primary"><%= range.until %></span>
+                </p>
+            </div>
             <div class="row">
                 <div class="header title">
                     <h2>Commits</h2>
