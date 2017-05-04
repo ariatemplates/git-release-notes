@@ -4,7 +4,7 @@ Generate release note pages from git commit history.
 
 ### Installation
 
-It's preferable to install it globally through `npm`
+It's preferable to install it globally through [`npm`](https://www.npmjs.com/package/git-release-notes)
 
     npm install -g git-release-notes
 
@@ -34,7 +34,11 @@ Sample outputs for each template can be found in the [`/samples`](https://github
 
 The second parameter of `git-release-notes` can be any path to a valid ejs template files.
 
-The only available template local variable is `commits` that is an array of commits, each containing
+##### Template Variables
+
+Several template variables are made available to the script running inside the template.
+
+`commits` is an array of commits, each containing
 
 * `sha1` commit hash (%H)
 * `authorName` author name (%an)
@@ -46,6 +50,7 @@ The only available template local variable is `commits` that is an array of comm
 * `title` subject (%s)
 * `messageLines` array of body lines (%b)
 
+`dateFnsFormat` is the date-fns [format](https://date-fns.org/docs/format) function. See the [html-bootstrap](https://github.com/ariatemplates/git-release-notes/blob/master/templates/html-bootstrap.ejs) for sample usage.
 
 ### Options
 
@@ -90,6 +95,12 @@ git-release-notes -t "^(\w*)(?:\(([\w\$\.]*)\))?\: (.*)$" -m type -m scope -m ti
 
 ### Debug
 
-If the output is not what you expect run
+If the output is not what you expect, set the DEBUG environment variable:
 
-`DEBUG=release-notes:* git-release-notes ...`
+#### Linux
+    DEBUG=release-notes:* git-release-notes ...
+
+#### Windows
+
+    SET DEBUG=release-notes:*
+    git-release-notes ...
