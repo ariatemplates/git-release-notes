@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var argv = require("optimist").usage("release-notes [<options>] <since>..<until> <template>")
+var argv = require("optimist").usage("git-release-notes [<options>] <since>..<until> <template>")
 .options("f", {
 	"alias" : "file"
 })
@@ -40,9 +40,12 @@ var fs = require("fs");
 var ejs = require("ejs");
 var path = require("path");
 var debug = require("debug")("release-notes:cli");
-var dateFnsFormat = require('date-fns/format')
+var dateFnsFormat = require('date-fns/format');
+var request = require('sync-request'); 
 
+var range = argv._[0];
 var template = argv._[1];
+
 debug("Trying to locate template '%s'", template);
 if (!fs.existsSync(template)) {
 	debug("Template file '%s' doesn't exist, maybe it's template name", template);
@@ -59,14 +62,15 @@ debug("Trying to read template '%s'", template);
 fs.readFile(template, function (err, templateContent) {
 	if (err) {
 		require("optimist").showHelp();
-		console.error("\nUnable to locate template file " + argv._[1]);
+		console.error("\nUnable to locate template file " + template);
 		process.exit(5);
 	} else {
 		getOptions(function (options) {
-			debug("Running git log in '%s' on branch '%s' with range '%s'", options.p, options.b, argv._[0]);
+			
+			debug("Running git log in '%s' on branch '%s' with range '%s'", options.p, options.b, range);
 			git.log({
 				branch : options.b,
-				range : argv._[0],
+				range : range,
 				title : new RegExp(options.t),
 				meaning : Array.isArray(options.m) ? options.m : [options.m],
 				cwd : options.p
@@ -74,9 +78,13 @@ fs.readFile(template, function (err, templateContent) {
 				debug("Got %d commits", commits.length);
 				if (commits.length) {
 					debug("Rendering template");
+					
 					var output = ejs.render(templateContent.toString(), {
 						commits : commits,
-						dateFnsFormat: dateFnsFormat
+						dateFnsFormat: dateFnsFormat,
+						options : options,
+						range : range,
+						request : request					// Make this available so a template can call a Jira API for example
 					});
 					process.stdout.write(output + "\n");
 				} else {
