@@ -79,15 +79,11 @@ fs.readFile(template, function (err, templateContent) {
 				if (commits.length) {
 					debug("Rendering template");
 					
-					var rangeSince = range.split("..")[0];
-					var rangeUntil = range.split("..")[1];
-					var rangeStruct = {since: rangeSince, until: rangeUntil};
-
 					var output = ejs.render(templateContent.toString(), {
 						commits : commits,
 						dateFnsFormat: dateFnsFormat,
 						options : options,
-						range : rangeStruct,
+						range : range,
 						request : request					// Make this available so a template can call a Jira API for example
 					});
 					process.stdout.write(output + "\n");
