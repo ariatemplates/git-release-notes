@@ -19,12 +19,17 @@ var argv = require("optimist").usage("git-release-notes [<options>] <since>..<un
 	"alias" : "branch",
 	"default" : "master"
 })
+.options("d", {
+	"alias" : "templateData",
+	"default" : ""
+})
 .describe({
 	"f" : "Configuration file",
 	"p" : "Git project path",
 	"t" : "Commit title regular expression",
 	"m" : "Meaning of capturing block in title's regular expression",
-	"b" : "Git branch, defaults to master"
+	"b" : "Git branch, defaults to master",
+	"d" : "JSON file containing arbitary data for the template"
 })
 .boolean("version")
 .check(function (argv) {
@@ -67,6 +72,8 @@ fs.readFile(template, function (err, templateContent) {
 	} else {
 		getOptions(function (options) {
 			
+			var templateData = getTemplateData(options);
+
 			debug("Running git log in '%s' on branch '%s' with range '%s'", options.p, options.b, range);
 			git.log({
 				branch : options.b,
@@ -84,6 +91,7 @@ fs.readFile(template, function (err, templateContent) {
 						dateFnsFormat: dateFnsFormat,
 						options : options,
 						range : range,
+						templateData: templateData,
 						request : request					// Make this available so a template can call a Jira API for example
 					});
 					process.stdout.write(output + "\n");
@@ -95,6 +103,25 @@ fs.readFile(template, function (err, templateContent) {
 		});
 	}
 });
+
+function getTemplateData(options){
+	var templateData = {};
+	if (options.d)
+	{
+		try {
+			var currentWorkingDirectory = process.cwd();
+			var fullPath = currentWorkingDirectory + '/' + options.d
+			debug("Loading template data from " + fullPath);
+			var rawData = fs.readFileSync(fullPath);
+			templateData = JSON.parse(rawData);
+		}
+		catch(ex){
+			
+			console.error("Failed to find or parse template file: " + options.d + ". (" + ex.message + ")");
+		}
+	}
+	return templateData;
+}
 
 function getOptions (callback) {
 	if (argv.f) {

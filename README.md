@@ -21,7 +21,7 @@ Where
 * `<template>` is an [ejs](https://github.com/visionmedia/ejs) template file used to generate the release notes
 
 Three sample templates are included as a reference in the `templates` folder
- 
+
  * `markdown` [(sample)](https://github.com/ariatemplates/git-release-notes/blob/master/samples/output-markdown.md)
  * `html` [(sample)](http://htmlpreview.github.io/?https://github.com/ariatemplates/git-release-notes/blob/master/samples/output-html.html)
  * `html-bootstrap` [(sample)](http://htmlpreview.github.io/?https://github.com/ariatemplates/git-release-notes/blob/master/samples/output-html-bootstrap.html)
@@ -58,6 +58,8 @@ Several template variables are made available to the script running inside the t
 
 `request` is an instance of [sync-request](https://www.npmjs.com/package/sync-request). This can be useful for querying the Jira API for example to extract extra metadata about a ticket related to a commit.
 
+`templateData` is an object parsed as JSON that is passed through to the template and can contain any arbitary data as required by the template. Useful for using the same template across different repositories.
+
 ### Command Line Options
 
 More advanced command line options are
@@ -67,6 +69,7 @@ More advanced command line options are
 * `t` or `title` Regular expression to parse the commit title (see next chapter)
 * `m` or `meaning` Meaning of capturing block in title's regular expression
 * `f` or `file` JSON configuration file. This is a better option when you don't want to pass all parameters to the command line, for an example see [options.json](https://github.com/ariatemplates/git-release-notes/blob/master/options.json)
+* `d` or `templateData` JSON data file that is passed straight through to the template.
 
 #### Title Parsing
 
