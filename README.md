@@ -69,7 +69,7 @@ More advanced command line options are
 * `t` or `title` Regular expression to parse the commit title (see next chapter)
 * `m` or `meaning` Meaning of capturing block in title's regular expression
 * `f` or `file` JSON configuration file. This is a better option when you don't want to pass all parameters to the command line, for an example see [options.json](https://github.com/ariatemplates/git-release-notes/blob/master/options.json)
-* `d` or `templateData` JSON data file that is passed straight through to the template.
+* `d` or `templateData` JSON data file that is passed straight through to the template. Path should be relative to current working directory.
 
 #### Title Parsing
 
