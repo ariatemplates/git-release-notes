@@ -1,3 +1,14 @@
+<%
+    // Derive repo name from current working directory
+    // http://stackoverflow.com/a/16695464/1141876
+    var repoPath = options.p;
+    var repoName = repoPath.match(/([^\/\\]*)\/*$/)[1]
+
+    
+    // Demonstrate how to obtain data from an API synchronously 
+    //var timeRequest = request('GET', 'http://date.jsontest.com/');
+    //var timeBody = timeRequest.getBody();
+%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,9 +28,16 @@
  <body>
     	<div class="container" role="main">
             <div class="row">
-                <h1>Release Notes</h1>
+                <h1><%= repoName %> Release Notes</h1>
             </div>
-            
+            <div class="row">
+                <p>
+                    Release notes since 
+                    <span class="label label-primary"><%= range.since %></span> until
+                    <span class="label label-primary"><%= range.until %></span>.
+                </p>
+                
+            </div>
             <div class="row">
                 <div class="header title">
                     <h2>Commits</h2>
@@ -42,11 +60,9 @@
                     messageLines = commit.messageLines.join("\n")
                   %>
                     <tr>
-                        
                         <td nowrap="nowrap"><span style="display:none"><%= sortableDate %>&nbsp;</span><%= formattedDate %></td>
                         <td><%= commit.authorName %></td>
-                        <td>
-                            <%= commit.title %>
+                        <td><%= commit.title %>
                             <% 
                                 if (messageLines.length > 0)
                                 {
