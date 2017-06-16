@@ -52,6 +52,8 @@ Several template variables are made available to the script running inside the t
 
 `dateFnsFormat` is the date-fns [format](https://date-fns.org/docs/format) function. See the [html-bootstrap](https://github.com/ariatemplates/git-release-notes/blob/master/templates/html-bootstrap.ejs) for sample usage.
 
+`range` is the commits range as passed to the command line
+
 ### Options
 
 More advanced options are
@@ -61,6 +63,7 @@ More advanced options are
 * `t` or `title` Regular expression to parse the commit title (see next chapter)
 * `m` or `meaning` Meaning of capturing block in title's regular expression
 * `f` or `file` JSON Configuration file, better option when you don't want to pass all parameters to the command line, for an example see [options.json](https://github.com/ariatemplates/git-release-notes/blob/master/options.json)
+* `s` or `script` External script for post-processing commits
 
 #### Title Parsing
 
@@ -92,6 +95,36 @@ Another project using similar conventions is [AngularJs](https://github.com/angu
 git-release-notes -t "^(\w*)(?:\(([\w\$\.]*)\))?\: (.*)$" -m type -m scope -m title v1.1.2..v1.1.3 markdown
 ```
 
+#### Post Processing
+
+The advanced options cover the most basic use cases, however sometimes you might need some additional processing, for instance to get commit metadata from external sources (Jira, GitHub, Waffle...)
+
+Using `-s script_file.js` you can invoke any arbitrary node script with the following signature:
+
+```js
+module.exports = function(data, callback) {
+  /**
+   * Here `data` contains exactly the same values your template will normally receive. e.g.
+   *
+   * {
+   *   commits: [], // the array of commits as described above
+   *   range: '<since>..<until>',
+   *   dateFnsFormat: function () {},
+   * }
+   *
+   * Do all the processing you need and when ready call the callback passing the new data structure
+   */
+  callback({
+    commits: data.commits.map(doSomething),
+    extra: { additional: 'data' },
+  });
+  //
+};
+```
+
+The object passed to the callback will be merged with the input data and passed back to the template.
+
+For an example check `samples/post-processing.js`
 
 ### Debug
 

@@ -1,30 +1,34 @@
 #!/usr/bin/env node
 var argv = require("optimist").usage("release-notes [<options>] <since>..<until> <template>")
 .options("f", {
-	"alias" : "file"
+	"alias": "file"
 })
 .options("p", {
-	"alias" : "path",
-	"default" : process.cwd()
+	"alias": "path",
+	"default": process.cwd()
 })
 .options("t", {
-	"alias" : "title",
-	"default" : "(.*)"
+	"alias": "title",
+	"default": "(.*)"
 })
 .options("m", {
-	"alias" : "meaning",
-	"default" : ['type']
+	"alias": "meaning",
+	"default": ['type']
 })
 .options("b", {
-	"alias" : "branch",
-	"default" : "master"
+	"alias": "branch",
+	"default": "master"
+})
+.options("s", {
+	"alias": "script"
 })
 .describe({
-	"f" : "Configuration file",
-	"p" : "Git project path",
-	"t" : "Commit title regular expression",
-	"m" : "Meaning of capturing block in title's regular expression",
-	"b" : "Git branch, defaults to master"
+	"f": "Configuration file",
+	"p": "Git project path",
+	"t": "Commit title regular expression",
+	"m": "Meaning of capturing block in title's regular expression",
+	"b": "Git branch, defaults to master",
+	"s": "External script to rewrite the commit history"
 })
 .boolean("version")
 .check(function (argv) {
@@ -55,6 +59,15 @@ if (!fs.existsSync(template)) {
 		process.exit(1);
 	}
 }
+
+debug("Trying to locate script '%s'", argv.s);
+if (argv.s && !fs.existsSync(argv.s)) {
+	debug("Script file '%s' doesn't exist");
+	require("optimist").showHelp();
+	console.error("\nExternal script must be a valid path " + argv.s);
+	process.exit(1);
+}
+
 debug("Trying to read template '%s'", template);
 fs.readFile(template, function (err, templateContent) {
 	if (err) {
@@ -65,24 +78,13 @@ fs.readFile(template, function (err, templateContent) {
 		getOptions(function (options) {
 			debug("Running git log in '%s' on branch '%s' with range '%s'", options.p, options.b, argv._[0]);
 			git.log({
-				branch : options.b,
-				range : argv._[0],
-				title : new RegExp(options.t),
-				meaning : Array.isArray(options.m) ? options.m : [options.m],
-				cwd : options.p
+				branch: options.b,
+				range: argv._[0],
+				title: new RegExp(options.t),
+				meaning: Array.isArray(options.m) ? options.m: [options.m],
+				cwd: options.p
 			}, function (commits) {
-				debug("Got %d commits", commits.length);
-				if (commits.length) {
-					debug("Rendering template");
-					var output = ejs.render(templateContent.toString(), {
-						commits : commits,
-						dateFnsFormat: dateFnsFormat
-					});
-					process.stdout.write(output + "\n");
-				} else {
-					console.error('No commits in the specified range');
-					process.exit(6);
-				}
+				postProcess(templateContent, commits);
 			});
 		});
 	}
@@ -99,10 +101,10 @@ function getOptions (callback) {
 				try {
 					var stored = JSON.parse(data);
 					options = {
-						b : stored.b || stored.branch || argv.b,
-						t : stored.t || stored.title || argv.t,
-						m : stored.m || stored.meaning || argv.m,
-						p : stored.p || stored.path || argv.p
+						b: stored.b || stored.branch || argv.b,
+						t: stored.t || stored.title || argv.t,
+						m: stored.m || stored.meaning || argv.m,
+						p: stored.p || stored.path || argv.p
 					};
 				} catch (ex) {
 					console.error("Invalid JSON in configuration file");
@@ -115,4 +117,49 @@ function getOptions (callback) {
 	} else {
 		callback(argv);
 	}
+}
+
+function postProcess(templateContent, commits) {
+	debug("Got %d commits", commits.length);
+	if (commits.length) {
+		if (argv.s) {
+			try {
+				var externalScript = require(path.join(process.cwd(), argv.s));
+			} catch (ex) {
+				debug("Exception while reading external script '%s'", ex.message);
+				console.error('Unable to read external script');
+				process.exit(7);
+			}
+			debug("Trying to run the external script");
+			try {
+				externalScript({
+					commits: commits,
+					range: argv._[0],
+					dateFnsFormat: dateFnsFormat,
+				}, function (data) {
+					render(templateContent, data);
+				});
+				debug("Waiting for external script to call the callback");
+			} catch (ex) {
+				debug("Exception while running external script '%s'", ex.message);
+				console.error('Error while processing external script', ex);
+				process.exit(8);
+			}
+		} else {
+			debug("Rendering template without post processing");
+			render(templateContent, { commits: commits });
+		}
+	} else {
+		console.error('No commits in the specified range');
+		process.exit(6);
+	}
+}
+
+function render(templateContent, data) {
+	debug("Rendering template");
+	var output = ejs.render(templateContent.toString(), Object.assign({
+		range: argv._[0],
+		dateFnsFormat: dateFnsFormat
+	}, data));
+	process.stdout.write(output + "\n");
 }
