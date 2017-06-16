@@ -16,9 +16,8 @@
     "test-html-bootstrap": "cross-env DEBUG=* node index.js -- 32a369f..0419636 ./templates/html-bootstrap.ejs > ./samples/output-html-bootstrap.html",
     "test-markdown": "node index.js -- 32a369f..0419636 ./templates/markdown.ejs > ./samples/output-markdown.md"
   },
-  "version": "1.0.0",
+  "version": "1.1.0",
   "dependencies": {
-    "cross-env": "4.0.0",
     "date-fns": "^1.28.4",
     "debug": "^2.6.0",
     "ejs": "^2.5.5",
@@ -39,7 +38,7 @@
   "homepage": "https://github.com/ariatemplates/git-release-notes",
   "preferGlobal": true,
   "devDependencies": {
-    "cross-env": "^4.0.0",
-    "eslint": "^3.14.0"
+    "cross-env": "^5.0.0",
+    "eslint": "^4.0.0"
   }
 }
