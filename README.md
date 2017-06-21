@@ -110,6 +110,7 @@ module.exports = function(data, callback) {
    *   commits: [], // the array of commits as described above
    *   range: '<since>..<until>',
    *   dateFnsFormat: function () {},
+   *   debug: function() {}, // utility function to log debug messages
    * }
    *
    * Do all the processing you need and when ready call the callback passing the new data structure
@@ -140,4 +141,4 @@ The DEBUG environment variable can also be useful for fault diagnosis:
     SET DEBUG=release-notes:cli,release-notes:externalscript
     git-release-notes ...
 
-Note the filtering options available: `release-notes:cli` and `release-notes:externalscript`
+Note the filtering options available: `release-notes:cli`, `release-notes:externalscript`, `release-notes:data`

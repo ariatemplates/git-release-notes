@@ -44,6 +44,7 @@ var fs = require("fs");
 var ejs = require("ejs");
 var path = require("path");
 var debug = require("debug")("release-notes:cli");
+var debugData = require("debug")("release-notes:data");
 var dateFnsFormat = require('date-fns/format')
 
 var template = argv._[1];
@@ -123,38 +124,35 @@ function postProcess(templateContent, commits) {
 	debug("Got %d commits", commits.length);
 	if (commits.length) {
 		if (argv.s) {
-            externalScriptPath = path.join(process.cwd(), argv.s);
+			var externalScriptPath = path.join(process.cwd(), argv.s);
 			try {
 				var externalScript = require(externalScriptPath);
 			} catch (ex) {
-				debug("Exception while reading external script '%s'", ex.message);
+				debug("Exception while reading external script '%s': '%s'", externalScriptPath, ex.message);
 				console.error('Unable to read external script');
 				process.exit(7);
 			}
 			debug("Trying to run the external script");
-            var jsonData;
+			var inputData;
+			var outputData;
 			try {
-                jsonData = {
+				inputData = {
 					commits: commits,
 					range: argv._[0],
 					dateFnsFormat: dateFnsFormat,
-                    debug: require("debug")("release-notes:externalscript")
+					debug: require("debug")("release-notes:externalscript")
 				};
-				externalScript(jsonData, function (modifiedData) {
-                    jsonData = modifiedData;
-					render(templateContent, jsonData);
+				externalScript(inputData, function (data) {
+					outputData = data;
+					render(templateContent, data);
 				});
 				debug("Waiting for external script to call the callback");
 			} catch (ex) {
 				debug("Exception while running external script '%s'", ex.message);
-                var errorFile = externalScriptPath + ".json";
-				console.error('Error while processing external script. Writing json data to "' + errorFile + '".', ex);
-                fs.writeFile(errorFile, JSON.stringify(jsonData), function(err) {
-                    if(err) {
-                        console.log(err);
-                    }
-                    process.exit(8);
-                }); 
+				debugData("Input data passed to the external script `%s`", JSON.stringify(inputData, null, '  '));
+				debugData("Output data received from the external script `%s`", outputData ? JSON.stringify(outputData, null, '  ') : '');
+				console.error('Error while processing external script', ex);
+				process.exit(8);
 			}
 		} else {
 			debug("Rendering template without post processing");
