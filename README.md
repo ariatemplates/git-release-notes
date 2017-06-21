@@ -127,13 +127,17 @@ The object passed to the callback will be merged with the input data and passed 
 For an example check `samples/post-processing.js`
 
 ### Debug
+If your post processing script or template throws an exception, the JSON data will be written to the file system in the same folder as the processing script.
 
-If the output is not what you expect, set the DEBUG environment variable:
+The DEBUG environment variable can also be useful for fault diagnosis:
 
 #### Linux
-    DEBUG=release-notes:* git-release-notes ...
+    DEBUG=release-notes:*
+    git-release-notes ...
 
 #### Windows
 
-    SET DEBUG=release-notes:*
+    SET DEBUG=release-notes:cli,release-notes:externalscript
     git-release-notes ...
+
+Note the filtering options available: `release-notes:cli` and `release-notes:externalscript`

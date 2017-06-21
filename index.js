@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var argv = require("optimist").usage("release-notes [<options>] <since>..<until> <template>")
+var argv = require("optimist").usage("git-release-notes [<options>] <since>..<until> <template>")
 .options("f", {
 	"alias": "file"
 })
@@ -123,27 +123,38 @@ function postProcess(templateContent, commits) {
 	debug("Got %d commits", commits.length);
 	if (commits.length) {
 		if (argv.s) {
+            externalScriptPath = path.join(process.cwd(), argv.s);
 			try {
-				var externalScript = require(path.join(process.cwd(), argv.s));
+				var externalScript = require(externalScriptPath);
 			} catch (ex) {
 				debug("Exception while reading external script '%s'", ex.message);
 				console.error('Unable to read external script');
 				process.exit(7);
 			}
 			debug("Trying to run the external script");
+            var jsonData;
 			try {
-				externalScript({
+                jsonData = {
 					commits: commits,
 					range: argv._[0],
 					dateFnsFormat: dateFnsFormat,
-				}, function (data) {
-					render(templateContent, data);
+                    debug: require("debug")("release-notes:externalscript")
+				};
+				externalScript(jsonData, function (modifiedData) {
+                    jsonData = modifiedData;
+					render(templateContent, jsonData);
 				});
 				debug("Waiting for external script to call the callback");
 			} catch (ex) {
 				debug("Exception while running external script '%s'", ex.message);
-				console.error('Error while processing external script', ex);
-				process.exit(8);
+                var errorFile = externalScriptPath + ".json";
+				console.error('Error while processing external script. Writing json data to "' + errorFile + '".', ex);
+                fs.writeFile(errorFile, JSON.stringify(jsonData), function(err) {
+                    if(err) {
+                        console.log(err);
+                    }
+                    process.exit(8);
+                }); 
 			}
 		} else {
 			debug("Rendering template without post processing");
