@@ -20,7 +20,11 @@ Where
 * `<since>..<until>` specifies the range of commits as in `git log`, see [gitrevisions(7)](http://www.kernel.org/pub/software/scm/git/docs/gitrevisions.html)
 * `<template>` is an [ejs](https://github.com/visionmedia/ejs) template file used to generate the release notes
 
-Sample templates are included as a reference: `markdown`, `html` and `html-bootstrap`.
+Three sample templates are included as a reference in the `templates` folder
+
+ * `markdown` [(sample)](https://github.com/ariatemplates/git-release-notes/blob/master/samples/output-markdown.md)
+ * `html` [(sample)](http://htmlpreview.github.io/?https://github.com/ariatemplates/git-release-notes/blob/master/samples/output-html.html)
+ * `html-bootstrap` [(sample)](http://htmlpreview.github.io/?https://github.com/ariatemplates/git-release-notes/blob/master/samples/output-html-bootstrap.html)
 
 This for example is the release notes generated for `joyent/node` by running
 
@@ -28,7 +32,6 @@ This for example is the release notes generated for `joyent/node` by running
 
 [<img src="https://github.com/ariatemplates/git-release-notes/raw/master/samples/node_thumb.png" alt="Node's release notes">](https://github.com/ariatemplates/git-release-notes/raw/master/samples/node.png)
 
-Sample outputs for each template can be found in the [`/samples`](https://github.com/ariatemplates/git-release-notes/tree/master/samples) folder
 
 #### Custom template
 
