@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var argv = require("optimist").usage("release-notes [<options>] <since>..<until> <template>")
+var argv = require("optimist").usage("git-release-notes [<options>] <since>..<until> <template>")
 .options("f", {
 	"alias": "file"
 })
@@ -44,6 +44,7 @@ var fs = require("fs");
 var ejs = require("ejs");
 var path = require("path");
 var debug = require("debug")("release-notes:cli");
+var debugData = require("debug")("release-notes:data");
 var dateFnsFormat = require('date-fns/format')
 
 var template = argv._[1];
@@ -123,25 +124,33 @@ function postProcess(templateContent, commits) {
 	debug("Got %d commits", commits.length);
 	if (commits.length) {
 		if (argv.s) {
+			var externalScriptPath = path.join(process.cwd(), argv.s);
 			try {
-				var externalScript = require(path.join(process.cwd(), argv.s));
+				var externalScript = require(externalScriptPath);
 			} catch (ex) {
-				debug("Exception while reading external script '%s'", ex.message);
+				debug("Exception while reading external script '%s': '%s'", externalScriptPath, ex.message);
 				console.error('Unable to read external script');
 				process.exit(7);
 			}
 			debug("Trying to run the external script");
+			var inputData;
+			var outputData;
 			try {
-				externalScript({
+				inputData = {
 					commits: commits,
 					range: argv._[0],
 					dateFnsFormat: dateFnsFormat,
-				}, function (data) {
+					debug: require("debug")("release-notes:externalscript")
+				};
+				externalScript(inputData, function (data) {
+					outputData = data;
 					render(templateContent, data);
 				});
 				debug("Waiting for external script to call the callback");
 			} catch (ex) {
 				debug("Exception while running external script '%s'", ex.message);
+				debugData("Input data passed to the external script `%s`", JSON.stringify(inputData, null, '  '));
+				debugData("Output data received from the external script `%s`", outputData ? JSON.stringify(outputData, null, '  ') : '');
 				console.error('Error while processing external script', ex);
 				process.exit(8);
 			}
