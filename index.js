@@ -124,7 +124,7 @@ function postProcess(templateContent, commits) {
 	debug("Got %d commits", commits.length);
 	if (commits.length) {
 		if (argv.s) {
-			var externalScriptPath = path.join(process.cwd(), argv.s);
+			var externalScriptPath = argv.s;
 			try {
 				var externalScript = require(externalScriptPath);
 			} catch (ex) {
