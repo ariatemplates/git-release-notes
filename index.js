@@ -22,13 +22,17 @@ var argv = require("optimist").usage("git-release-notes [<options>] <since>..<un
 .options("s", {
 	"alias": "script"
 })
+.options("c", {
+	"alias": "use-merge-commits"
+})
 .describe({
 	"f": "Configuration file",
 	"p": "Git project path",
 	"t": "Commit title regular expression",
 	"m": "Meaning of capturing block in title's regular expression",
 	"b": "Git branch, defaults to master",
-	"s": "External script to rewrite the commit history"
+	"s": "External script to rewrite the commit history",
+	"c": "Only use merge commits"
 })
 .boolean("version")
 .check(function (argv) {
@@ -83,7 +87,8 @@ fs.readFile(template, function (err, templateContent) {
 				range: argv._[0],
 				title: new RegExp(options.t),
 				meaning: Array.isArray(options.m) ? options.m: [options.m],
-				cwd: options.p
+				cwd: options.p,
+				useMergeCommits: options.c
 			}, function (commits) {
 				postProcess(templateContent, commits);
 			});
@@ -105,7 +110,8 @@ function getOptions (callback) {
 						b: stored.b || stored.branch || argv.b,
 						t: stored.t || stored.title || argv.t,
 						m: stored.m || stored.meaning || argv.m,
-						p: stored.p || stored.path || argv.p
+						p: stored.p || stored.path || argv.p,
+						c: stored.c || stored.mergeCommits || argv.c
 					};
 				} catch (ex) {
 					console.error("Invalid JSON in configuration file");
