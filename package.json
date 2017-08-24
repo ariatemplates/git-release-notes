@@ -21,7 +21,7 @@
   "dependencies": {
     "date-fns": "^1.28.4",
     "debug": "^2.6.0",
-    "ejs": "^2.5.5",
+    "ejs": "^2.5.7",
     "optimist": "^0.6.1"
   },
   "contributors": [
@@ -39,7 +39,7 @@
   "homepage": "https://github.com/ariatemplates/git-release-notes",
   "preferGlobal": true,
   "devDependencies": {
-    "cross-env": "^5.0.0",
-    "eslint": "^4.0.0"
+    "cross-env": "^5.0.5",
+    "eslint": "^4.5.0"
   }
 }

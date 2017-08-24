@@ -67,6 +67,7 @@ More advanced options are
 * `m` or `meaning` Meaning of capturing block in title's regular expression
 * `f` or `file` JSON Configuration file, better option when you don't want to pass all parameters to the command line, for an example see [options.json](https://github.com/ariatemplates/git-release-notes/blob/master/options.json)
 * `s` or `script` External script for post-processing commits
+* `c` or `merge-commits` List only merge commits, `git log` command is executed with the `--merges` flag instead of `--no-merges`
 
 #### Title Parsing
 
