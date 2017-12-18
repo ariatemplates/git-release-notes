@@ -22,6 +22,10 @@ var argv = require("optimist").usage("git-release-notes [<options>] <since>..<un
 .options("s", {
 	"alias": "script"
 })
+.options("g", {
+	"alias": "grep",
+	"default": "(.*)"
+})
 .boolean("c")
 .alias("c", "merge-commits")
 .describe({
@@ -31,7 +35,8 @@ var argv = require("optimist").usage("git-release-notes [<options>] <since>..<un
 	"m": "Meaning of capturing block in title's regular expression",
 	"b": "Git branch, defaults to master",
 	"s": "External script to rewrite the commit history",
-	"c": "Only use merge commits"
+	"c": "Only use merge commits",
+	"g": "Grep commits based on regular expression applied to against text in title"
 })
 .boolean("version")
 .check(function (argv) {
@@ -87,7 +92,8 @@ fs.readFile(template, function (err, templateContent) {
 				title: new RegExp(options.t),
 				meaning: Array.isArray(options.m) ? options.m: [options.m],
 				cwd: options.p,
-				mergeCommits: options.c
+				mergeCommits: options.c,
+				regex: options.g
 			}, function (commits) {
 				postProcess(templateContent, commits);
 			});
