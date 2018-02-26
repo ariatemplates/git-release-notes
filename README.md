@@ -64,6 +64,7 @@ More advanced options are
 * `p` or `path` Git project path, defaults to the current working path
 * `b` or `branch` Git branch, defaults to `master`
 * `t` or `title` Regular expression to parse the commit title (see next chapter)
+* `i` or `ignore-case` Ignore case flag for title's regular expression. `/.*/` becomes `/.*/i`
 * `m` or `meaning` Meaning of capturing block in title's regular expression
 * `f` or `file` JSON Configuration file, better option when you don't want to pass all parameters to the command line, for an example see [options.json](https://github.com/ariatemplates/git-release-notes/blob/master/options.json)
 * `s` or `script` External script for post-processing commits
