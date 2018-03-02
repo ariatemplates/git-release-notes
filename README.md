@@ -64,10 +64,12 @@ More advanced options are
 * `p` or `path` Git project path, defaults to the current working path
 * `b` or `branch` Git branch, defaults to `master`
 * `t` or `title` Regular expression to parse the commit title (see next chapter)
+* `i` or `ignore-case` Ignore case flag for title's regular expression. `/.*/` becomes `/.*/i`
 * `m` or `meaning` Meaning of capturing block in title's regular expression
 * `f` or `file` JSON Configuration file, better option when you don't want to pass all parameters to the command line, for an example see [options.json](https://github.com/ariatemplates/git-release-notes/blob/master/options.json)
 * `s` or `script` External script for post-processing commits
 * `c` or `merge-commits` List only merge commits, `git log` command is executed with the `--merges` flag instead of `--no-merges`
+* `o` or `gitlog-option` to add some additional git log options **and** ignores the `merge-commits` option, this is direct given to `git log` by adding a `--` to each longname option from the array (e.g. `-o first-parent`). 
 
 #### Title Parsing
 

@@ -11,6 +11,8 @@ var argv = require("optimist").usage("git-release-notes [<options>] <since>..<un
 	"alias": "title",
 	"default": "(.*)"
 })
+.boolean("i")
+.alias("i", "ignore-case")
 .options("m", {
 	"alias": "meaning",
 	"default": ['type']
@@ -22,16 +24,22 @@ var argv = require("optimist").usage("git-release-notes [<options>] <since>..<un
 .options("s", {
 	"alias": "script"
 })
+.options("o", {
+	"alias": "gitlog-option",
+	"default" : []
+})
 .boolean("c")
 .alias("c", "merge-commits")
 .describe({
 	"f": "Configuration file",
 	"p": "Git project path",
 	"t": "Commit title regular expression",
+	"i": "Ignore case of title's regular expression",
 	"m": "Meaning of capturing block in title's regular expression",
 	"b": "Git branch, defaults to master",
 	"s": "External script to rewrite the commit history",
-	"c": "Only use merge commits"
+	"c": "Only use merge commits",
+	"o": "Additional git log options AND ignore 'c' option"
 })
 .boolean("version")
 .check(function (argv) {
@@ -84,10 +92,11 @@ fs.readFile(template, function (err, templateContent) {
 			git.log({
 				branch: options.b,
 				range: argv._[0],
-				title: new RegExp(options.t),
+				title: options.i ? new RegExp(options.t, 'i') : new RegExp(options.t),
 				meaning: Array.isArray(options.m) ? options.m: [options.m],
 				cwd: options.p,
-				mergeCommits: options.c
+				mergeCommits: options.c,
+				additionalOptions: Array.isArray(options.o) ? options.o : [options.o]
 			}, function (commits) {
 				postProcess(templateContent, commits);
 			});
@@ -108,7 +117,9 @@ function getOptions (callback) {
 					options = {
 						b: stored.b || stored.branch || argv.b,
 						t: stored.t || stored.title || argv.t,
+						i: stored.i || stored.ignoreCase || argv.i,
 						m: stored.m || stored.meaning || argv.m,
+						o: stored.o || stored.gitlogOption || argv.o,
 						p: stored.p || stored.path || argv.p,
 						c: stored.c || stored.mergeCommits || argv.c
 					};
