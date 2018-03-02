@@ -119,6 +119,7 @@ function getOptions (callback) {
 						t: stored.t || stored.title || argv.t,
 						i: stored.i || stored.ignoreCase || argv.i,
 						m: stored.m || stored.meaning || argv.m,
+						o: stored.o || stored.gitlogOption || argv.o,
 						p: stored.p || stored.path || argv.p,
 						c: stored.c || stored.mergeCommits || argv.c
 					};
