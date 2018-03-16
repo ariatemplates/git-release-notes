@@ -10,12 +10,14 @@
     "version"
   ],
   "scripts": {
-    "lint": "eslint index.js lib",
+    "lint": "eslint --fix cli.js index.js lib",
+    "test": "jest",
     "posttest": "npm run lint",
-    "test-html": "node index.js -- 32a369f..0419636 ./templates/html.ejs > ./samples/output-html.html",
-    "test-html-bootstrap": "cross-env DEBUG=* node index.js -- 32a369f..0419636 ./templates/html-bootstrap.ejs > ./samples/output-html-bootstrap.html",
-    "test-markdown": "node index.js -- 32a369f..0419636 ./templates/markdown.ejs > ./samples/output-markdown.md",
-    "test-script": "node index.js -s ./samples/post-processing.js 32a369f..0419636 ./templates/markdown.ejs"
+    "test-html": "node cli.js -- 32a369f..f6cf9af ./templates/html.ejs > ./samples/output-html.html",
+    "test-html-bootstrap": "node cli.js -- 32a369f..0419636 ./templates/html-bootstrap.ejs > ./samples/output-html-bootstrap.html",
+    "test-markdown": "node cli.js -- 32a369f..f6cf9af ./templates/markdown.ejs > ./samples/output-markdown.md",
+    "test-script": "node cli.js -s ./samples/post-processing.js 32a369f..0419636 ./templates/markdown.ejs",
+    "test:watch": "jest --watch"
   },
   "version": "2.1.0",
   "dependencies": {
@@ -31,15 +33,24 @@
       "url": "https://github.com/piuccio"
     }
   ],
-  "bin": "./index.js",
+  "bin": "./cli.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/ariatemplates/git-release-notes"
+  },
+  "engines": {
+    "node": ">=4"
   },
   "homepage": "https://github.com/ariatemplates/git-release-notes",
   "preferGlobal": true,
   "devDependencies": {
     "cross-env": "^5.1.3",
-    "eslint": "^4.18.1"
+    "eslint": "^4.18.1",
+    "jest": "^22.4.2"
+  },
+  "jest": {
+    "testMatch": [
+      "**/*.test.js"
+    ]
   }
 }
