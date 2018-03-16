@@ -49,6 +49,7 @@
     "jest": "^22.4.2"
   },
   "jest": {
+    "testEnvironment": "node",
     "testMatch": [
       "**/*.test.js"
     ]
