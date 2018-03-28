@@ -1,0 +1,9 @@
+# Release Notes
+## <%= range %>
+<% commits.forEach(function (commit) { %>
+* __[<%= commit.issue %>](<%= commit.issueLink %>) <%= commit.title %>__
+
+    [<%= commit.authorName %>](mailto:<%= commit.authorEmail %>) - <%= commit.committerDate %>
+
+    <%= commit.messageLines.join("\n    ") %>
+<% }) %>
