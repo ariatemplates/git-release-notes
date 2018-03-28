@@ -1,4 +1,5 @@
 {
-	"title" : "^([a-z]+) #(\\d+) (.*)$",
-	"meaning" : ["type", "issue", "title"]
+	"title" : "^([A-Z]+-\\d+) (.*)$",
+	"meaning" : ["issue", "title"],
+  "jiraHost": "https://virdocs.atlassian.net"
 }
