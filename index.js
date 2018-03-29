@@ -10,6 +10,7 @@ module.exports = function module(cliOptions, positionalRange, positionalTemplate
 		return fileSystem.resolveOptions(cliOptions).then(function (options) {
 			debug("Running git log in '%s' on branch '%s' with range '%s'", options.p, options.b, positionalRange);
 			return git.log({
+				jiraHost: options.j,
 				branch: options.b,
 				range: positionalRange,
 				title: options.i ? new RegExp(options.t, 'i') : new RegExp(options.t),

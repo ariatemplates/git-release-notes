@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 var argv = require("optimist").usage("git-release-notes [<options>] <since>..<until> <template>")
+.options("j", {
+	"alias": "jiraHost",
+})
 .options("f", {
-	"alias": "file"
+	"alias": "file",
+	"default": "options.json"
 })
 .options("p", {
 	"alias": "path",
@@ -39,11 +43,15 @@ var argv = require("optimist").usage("git-release-notes [<options>] <since>..<un
 	"b": "Git branch, defaults to master",
 	"s": "External script to rewrite the commit history",
 	"c": "Only use merge commits",
-	"o": "Additional git log options AND ignore 'c' option"
+	"o": "Additional git log options AND ignore 'c' option",
+	"j": "URL for Jira Instance"
+
 })
 .boolean("version")
 .check(function (argv) {
-	if (argv._.length == 2) {
+
+	// Added template default so only one argument is required
+	if (argv._.length >= 1 && argv._.length <=2) {
 		return true;
 	}
 	throw "Invalid parameters, please specify an interval and the template";
@@ -51,7 +59,17 @@ var argv = require("optimist").usage("git-release-notes [<options>] <since>..<un
 .argv;
 
 const index = require('./index');
-index(argv, argv._[0], argv._[1])
+
+// default to using the jira template
+let template;
+if(!argv._[1]) {
+	template = "issuelink-markdown"
+}
+else {
+	template = argv._[1]
+}
+
+index(argv, argv._[0], template)
 .then(function (output) {
   process.stdout.write(output + "\n");
 })
