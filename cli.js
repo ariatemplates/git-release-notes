@@ -29,6 +29,9 @@ var argv = require("optimist").usage("git-release-notes [<options>] <since>..<un
 	"alias": "gitlog-option",
 	"default" : []
 })
+.options("j", {
+	"alias": "project"
+})
 .boolean("c")
 .alias("c", "merge-commits")
 .describe({
@@ -40,7 +43,8 @@ var argv = require("optimist").usage("git-release-notes [<options>] <since>..<un
 	"b": "Git branch, defaults to master",
 	"s": "External script to rewrite the commit history",
 	"c": "Only use merge commits",
-	"o": "Additional git log options AND ignore 'c' option"
+	"o": "Additional git log options AND ignore 'c' option",
+	"j": "Name of the project being released"
 })
 .boolean("version")
 .check(function (argv) {
