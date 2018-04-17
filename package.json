@@ -19,7 +19,7 @@
     "test-script": "node cli.js -s ./samples/post-processing.js 32a369f..0419636 ./templates/markdown.ejs",
     "test:watch": "jest --watch"
   },
-  "version": "3.0.0",
+  "version": "3.3.1",
   "dependencies": {
     "date-fns": "^1.29.0",
     "debug": "^3.1.0",
