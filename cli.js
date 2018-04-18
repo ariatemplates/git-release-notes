@@ -22,11 +22,15 @@ var argv = require("optimist").usage("git-release-notes [<options>] <since>..<un
 	"default": "master"
 })
 .options("s", {
-	"alias": "script"
+	"alias": "script",
+	"default": "./issue-linker.js"
 })
 .options("o", {
 	"alias": "gitlog-option",
 	"default" : []
+})
+.options("j", {
+	"alias": "project"
 })
 .boolean("c")
 .alias("c", "merge-commits")
@@ -39,11 +43,13 @@ var argv = require("optimist").usage("git-release-notes [<options>] <since>..<un
 	"b": "Git branch, defaults to master",
 	"s": "External script to rewrite the commit history",
 	"c": "Only use merge commits",
-	"o": "Additional git log options AND ignore 'c' option"
+	"o": "Additional git log options AND ignore 'c' option",
+	"j": "Name of the project being released"
 })
 .boolean("version")
 .check(function (argv) {
-	if (argv._.length == 2) {
+	// Added template default so only one argument is required
+	if (argv._.length >= 1 && argv._.length <=2) {
 		return true;
 	}
 	throw "Invalid parameters, please specify an interval and the template";
@@ -51,7 +57,18 @@ var argv = require("optimist").usage("git-release-notes [<options>] <since>..<un
 .argv;
 
 const index = require('./index');
-index(argv, argv._[0], argv._[1])
+
+// default to using the issuelink template to reduce things
+// dev needs to remember
+let template;
+if(!argv._[1]) {
+	template = "issuelink-markdown"
+}
+else {
+	template = argv._[1]
+}
+
+index(argv, argv._[0], template)
 .then(function (output) {
   process.stdout.write(output + "\n");
 })

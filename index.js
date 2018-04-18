@@ -20,6 +20,8 @@ module.exports = function module(cliOptions, positionalRange, positionalTemplate
 			}).then(function (commits) {
 				return processCommits(options, commits, positionalRange);
 			}).then(function (data) {
+				let projectName = cliOptions.j;
+				data.projectName = projectName;
 				return render(positionalRange, template, data);
 			});
 		});
