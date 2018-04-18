@@ -15,7 +15,7 @@ stage('publish') {
 
 		if(env.DOCKER_TAG != "") {
 			withCredentials([string(credentialsId: 'npm-token', variable: 'NPM_TOKEN')]) {
-				sh 'sudo -E docker build --build-arg NPM_TOKEN=$NPM_TOKEN-t ${DOCKER_TAG} .';
+				sh 'sudo -E docker build --build-arg NPM_TOKEN=$NPM_TOKEN -t ${DOCKER_TAG} .';
 				sh 'sudo -E docker run -e "NPM_TOKEN=$NPM_TOKEN" ${DOCKER_TAG} bash -c "npm --no-git-tag-version version ${DOCKER_TAG} && npm publish --tag ${NPM_TAG}"';
 				sh "sudo -E docker push ${DOCKER_TAG}";
 			}
