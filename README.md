@@ -53,6 +53,7 @@ Several template variables are made available to the script running inside the t
 * `committerEmail` committer email (%ce)
 * `committerDate` committer date (%cD)
 * `title` subject (%s)
+* `tag` tag (%D)
 * `messageLines` array of body lines (%b)
 
 `dateFnsFormat` is the date-fns [format](https://date-fns.org/docs/format) function. See the [html-bootstrap](https://github.com/ariatemplates/git-release-notes/blob/master/templates/html-bootstrap.ejs) for sample usage.
