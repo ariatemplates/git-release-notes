@@ -59,7 +59,7 @@ index(argv, argv._[0], argv._[1])
   process.stdout.write(output + "\n");
 })
 .catch(function (error) {
-  require("optimist").showHelp();
+  require('yargs').showHelp();
   console.error('\n', error.message);
   process.exit(1);
 });
