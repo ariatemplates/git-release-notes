@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 var argv = require('yargs')
-	.usage('git-release-notes [<options>] <since>..<until> <template>')
+	.usage('git-release-notes [<options>] <since>..<until> <template> [<template_data>]')
 	.demandCommand(2)
 	.example(
 		'git-release-notes -t "(feat|bug): (.*)" -m type -m title v1.0.0..v2.0.0 markdown',
@@ -54,7 +54,7 @@ var argv = require('yargs')
 	.argv;
 
 const index = require('./index');
-index(argv, argv._[0], argv._[1])
+index(argv, argv._[0], argv._[1], argv._[2])
 .then(function (output) {
   process.stdout.write(output + "\n");
 })

@@ -15,12 +15,13 @@ It's also possible to use `git-release-notes` as a node module. Check the usage 
 The basic usage from the command line is
 
     cd <your_git_project>
-    git-release-notes <since>..<until> <template>
+    git-release-notes <since>..<until> <template> [template_data]
 
 Where
 
 * `<since>..<until>` specifies the range of commits as in `git log`, see [gitrevisions(7)](http://www.kernel.org/pub/software/scm/git/docs/gitrevisions.html)
 * `<template>` is an [ejs](https://github.com/visionmedia/ejs) template file used to generate the release notes
+* `<template_data>` is an optional parameter, which should be a string transferred from `JSON.stringify(AN_PLAIN_OBJECT)`
 
 Three sample templates are included as a reference in the `templates` folder
 
@@ -33,7 +34,6 @@ This for example is the release notes generated for `joyent/node` by running
     git-release-notes v0.9.8..v0.9.9 html > changelog.html
 
 [<img src="https://github.com/ariatemplates/git-release-notes/raw/master/samples/node_thumb.png" alt="Node's release notes">](https://github.com/ariatemplates/git-release-notes/raw/master/samples/node.png)
-
 
 #### Custom template
 
@@ -59,6 +59,8 @@ Several template variables are made available to the script running inside the t
 `dateFnsFormat` is the date-fns [format](https://date-fns.org/docs/format) function. See the [html-bootstrap](https://github.com/ariatemplates/git-release-notes/blob/master/templates/html-bootstrap.ejs) for sample usage.
 
 `range` is the commits range as passed to the command line
+
+Additionally, we provide a way to add custom variables when used as a module or CLI.
 
 ### Options
 
@@ -156,7 +158,7 @@ const OPTIONS = {
 const RANGE = 'v1.0.0..v2.0.0';
 const TEMPLATE = 'markdown';
 
-releaseNotes(OPTIONS, RANGE, TEMPLATE)
+releaseNotes(OPTIONS, RANGE, TEMPLATE, TEMPLATE_DATA)
 .then((changelog) => {
   console.log(`Changelog between ${RANGE}\n\n${changelog}`);
 })

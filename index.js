@@ -5,7 +5,7 @@ var fileSystem = require('./lib/file-system');
 var processCommits = require('./lib/process').processCommits;
 var dateFnsFormat = require('date-fns/format');
 
-module.exports = function module(cliOptions, positionalRange, positionalTemplate) {
+module.exports = function module(cliOptions, positionalRange, positionalTemplate, customTemplateData) {
 	return fileSystem.resolveTemplate(positionalTemplate).then(function (template) {
 		return fileSystem.resolveOptions(cliOptions).then(function (options) {
 			debug("Running git log in '%s' on branch '%s' with range '%s'", options.p, options.b, positionalRange);
@@ -20,6 +20,15 @@ module.exports = function module(cliOptions, positionalRange, positionalTemplate
 			}).then(function (commits) {
 				return processCommits(options, commits, positionalRange);
 			}).then(function (data) {
+				if (typeof customTemplateData === "string") {
+					try {
+						customTemplateData = JSON.parse(customTemplateData);
+					} catch(e) {
+						customTemplateData = {}
+					}
+				}
+
+				Object.assign(data, customTemplateData);
 				return render(positionalRange, template, data);
 			});
 		});
