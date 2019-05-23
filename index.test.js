@@ -8,7 +8,7 @@ describe('index module', () => {
     return expect(index(OPTIONS, RANGE, 'missing-template')).rejects.toThrow(/template file/);
   });
 
-  it('rejects if the configuation in invalid', () => {
+  it('rejects if the configuration in invalid', () => {
     const OPTIONS = { f: 'missing-configuration' };
     const RANGE = 'since..to';
     return expect(index(OPTIONS, RANGE, 'markdown')).rejects.toThrow(/configuration file/);
