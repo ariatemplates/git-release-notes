@@ -1,4 +1,3 @@
-const path = require('path');
 const index = require('./index');
 
 describe('index module', () => {
@@ -44,5 +43,29 @@ describe('index module', () => {
     };
     const RANGE = '7d27899..28b863e';
     return expect(index(OPTIONS, RANGE, 'markdown')).resolves.toMatch(/__2.1.0__/i);
-  });
+	});
+
+	it('resolves with the postprocessing function', () => {
+		const OPTIONS = {
+			script: (data, callback) => {
+				callback({
+					foo: "bar"
+				});
+			},
+			branch: 'testing-branch'
+		}
+		const RANGE = '7d27899..28b863e';
+		return expect(index(OPTIONS, RANGE, 'lib/__tests__/templates/custom.ejs')).resolves.toMatch(/bar/i);
+	})
+
+	it('resolves with the throw postprocessing function', () => {
+		const OPTIONS = {
+			script: () => {
+				throw Error('from script');
+			},
+			branch: 'testing-branch'
+		}
+		const RANGE = '7d27899..28b863e';
+    return expect(index(OPTIONS, RANGE, 'markdown')).rejects.toThrow(/processing external script/i);
+	})
 });
