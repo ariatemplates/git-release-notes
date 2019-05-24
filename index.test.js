@@ -66,6 +66,6 @@ describe('index module', () => {
 			branch: 'testing-branch'
 		}
 		const RANGE = '7d27899..28b863e';
-    return expect(index(OPTIONS, RANGE, 'markdown')).rejects.toThrow(/processing external script/i);
+    return expect(index(OPTIONS, RANGE, 'markdown')).rejects.toThrow(/processing external function/i);
 	})
 });
