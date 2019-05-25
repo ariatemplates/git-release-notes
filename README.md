@@ -170,6 +170,19 @@ releaseNotes(OPTIONS, RANGE, TEMPLATE)
 
 The syntax reflects the command line parameters, so options is an object containing `path`, `branch`, `title` and so on. You can refer to the list of options in the command line usage section. You can use either the long or short syntax, the module will use the same defaults as the command line if an option is missing.
 
+However, there is a little difference between module usage and CLI of the `script` parameter. When used as CLI, it receives a path link to a JS module file, but used as a module, it receives a function:
+
+```js
+releaseNotes({
+	branch: 'master',
+	script: (data, callback) => {
+		callback({
+			foo: 'bar'
+		})
+	}
+}, RANGE, TEMPLATE)
+```
+
 
 ### Debug
 If your post processing script or template throws an exception, the JSON data will be written to the file system in the same folder as the processing script.
