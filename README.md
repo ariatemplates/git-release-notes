@@ -174,12 +174,12 @@ However, there is a little difference between module usage and CLI of the `scrip
 
 ```js
 releaseNotes({
-	branch: 'master',
-	script: (data, callback) => {
-		callback({
-			foo: 'bar'
-		})
-	}
+  branch: 'master',
+  script: (data, callback) => {
+    callback({
+      foo: 'bar'
+    })
+  }
 }, RANGE, TEMPLATE)
 ```
 
