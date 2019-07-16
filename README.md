@@ -183,6 +183,15 @@ releaseNotes({
 }, RANGE, TEMPLATE)
 ```
 
+### Typescript
+
+`git-release-notes` includes [Typescript](http://www.typescriptlang.org/) definitions.
+
+```ts
+import * as releaseNotes from "git-release-notes";
+releaseNotes({ path }, range, TEMPLATE);
+```
+
 
 ### Debug
 If your post processing script or template throws an exception, the JSON data will be written to the file system in the same folder as the processing script.
