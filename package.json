@@ -2,6 +2,7 @@
   "author": "ariatemplates <contact@ariatemplates.com> (http://github.com/ariatemplates)",
   "name": "git-release-notes",
   "description": "Generate beautiful release notes from a git log.",
+  "typings": "./index.d.ts",
   "keywords": [
     "git",
     "log",

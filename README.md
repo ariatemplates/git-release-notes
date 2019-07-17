@@ -174,13 +174,22 @@ However, there is a little difference between module usage and CLI of the `scrip
 
 ```js
 releaseNotes({
-	branch: 'master',
-	script: (data, callback) => {
-		callback({
-			foo: 'bar'
-		})
-	}
+  branch: 'master',
+  script: (data, callback) => {
+    callback({
+      foo: 'bar'
+    })
+  }
 }, RANGE, TEMPLATE)
+```
+
+### Typescript
+
+`git-release-notes` includes [Typescript](http://www.typescriptlang.org/) definitions.
+
+```ts
+import * as releaseNotes from "git-release-notes";
+releaseNotes({ path }, range, TEMPLATE);
 ```
 
 
