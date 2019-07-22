@@ -40,7 +40,7 @@
     "url": "https://github.com/ariatemplates/git-release-notes"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   },
   "homepage": "https://github.com/ariatemplates/git-release-notes",
   "preferGlobal": true,
