@@ -24,7 +24,7 @@
   "dependencies": {
     "date-fns": "^1.30.1",
     "debug": "^4.1.1",
-    "ejs": "^2.6.1",
+    "ejs": "^2.6.2",
     "yargs": "^12.0.5"
   },
   "contributors": [
@@ -40,14 +40,14 @@
     "url": "https://github.com/ariatemplates/git-release-notes"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   },
   "homepage": "https://github.com/ariatemplates/git-release-notes",
   "preferGlobal": true,
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "eslint": "^5.11.0",
-    "jest": "^23.6.0"
+    "eslint": "^6.1.0",
+    "jest": "^24.8.0"
   },
   "jest": {
     "testEnvironment": "node",
