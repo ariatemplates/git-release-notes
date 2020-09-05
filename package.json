@@ -11,7 +11,7 @@
     "version"
   ],
   "scripts": {
-    "lint": "eslint --fix cli.js index.js lib",
+    "lint": "npx eslint --fix cli.js index.js lib",
     "test": "jest",
     "posttest": "npm run lint",
     "test-html": "node cli.js -- 32a369f..f6cf9af ./templates/html.ejs > ./samples/output-html.html",
@@ -40,13 +40,13 @@
     "url": "https://github.com/ariatemplates/git-release-notes"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "homepage": "https://github.com/ariatemplates/git-release-notes",
+  "license": "MIT",
   "preferGlobal": true,
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "eslint": "^6.1.0",
     "jest": "^24.8.0"
   },
   "jest": {
