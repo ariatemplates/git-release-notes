@@ -46,8 +46,7 @@
   "license": "MIT",
   "preferGlobal": true,
   "devDependencies": {
-    "cross-env": "^5.2.0",
-    "jest": "^24.8.0"
+    "jest": "26.4.2"
   },
   "jest": {
     "testEnvironment": "node",
